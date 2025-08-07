@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:test_fund_managment/config/app_config.dart';
+import 'package:test_fund_managment/domain/usecases/app_usecases.dart';
 import 'package:test_fund_managment/infraestructure/infraestructure.dart';
 
 final getIt = GetIt.instance;
@@ -9,6 +9,8 @@ void setUpLocator() {
   getIt.registerLazySingleton<AppApi>(
     () => AppApi(),
   );
-  // configs
-  getIt.registerLazySingleton<AppConfig>(() => AppConfig(getIt<AppApi>()));
+   // UseCases directamente
+  getIt.registerLazySingleton<AppUseCases>(
+    () => AppUseCases(getIt<AppApi>()),
+  );
 }

@@ -9,11 +9,13 @@ class SubscriptionFormWidget extends StatefulWidget {
   final Fund fund;
   final Function(double amount) onSubscribe;
   final VoidCallback? onCancel;
+  final double availableAmount;
 
   const SubscriptionFormWidget({
     super.key,
     required this.fund,
     required this.onSubscribe,
+    required this.availableAmount,
     this.onCancel,
   });
 
@@ -54,6 +56,11 @@ class _SubscriptionFormWidgetState extends State<SubscriptionFormWidget> {
             widget.fund.minimumAmount,
             message:
                 'El monto mínimo es ${UtilsApp.currencyFormat(widget.fund.minimumAmount, widget.fund.currency)}',
+          ),
+          FormValidators.max(
+            widget.availableAmount,
+            message:
+                'El monto máximo disponible es ${UtilsApp.currencyFormat(widget.availableAmount, widget.fund.currency)}',
           ),
         ],
         onChanged: (value) {},
@@ -142,12 +149,38 @@ class _SubscriptionFormWidgetState extends State<SubscriptionFormWidget> {
                     size: 20,
                   ),
                   const SizedBox(width: 8),
-                  Text(
-                    'Monto mínimo: ${UtilsApp.currencyFormat(widget.fund.minimumAmount, widget.fund.currency)}',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Colors.green.shade700,
-                      fontSize: 15,
+                  Expanded(
+                    child: Text(
+                      'Monto mínimo: ${UtilsApp.currencyFormat(widget.fund.minimumAmount, widget.fund.currency)}',
+                      
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.green.shade700,
+                        fontSize: 15,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Icon(
+                    Icons.account_balance,
+                    color: Colors.blue.shade600,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Disponible: ${UtilsApp.currencyFormat(widget.availableAmount, 'COP')}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue.shade700,
+                        fontSize: 15,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                 ],
@@ -194,7 +227,7 @@ class _SubscriptionFormWidgetState extends State<SubscriptionFormWidget> {
                         }
                       }
                     : null, // Deshabilitado cuando el formulario no es válido
-                child: const Text('Confirmar Suscripción'),
+                child: const Text('Confirmar'),
               ),
             ),
           ],

@@ -135,4 +135,22 @@ class FormValidators {
       errorMessage: message ?? 'Valor mínimo: $minValue',
     );
   }
+
+  /// Validador para valor máximo (números)
+  static Validator max(double maxValue, {String? message}) {
+    return Validator(
+      isValid: (value, {Map<String, String>? allValues}) {
+        if (value.isEmpty) return true;
+        
+        final numValue = double.tryParse(value);
+        if (numValue == null) return true;
+        
+        if (numValue > maxValue) {
+          return false;
+        }
+        return true;
+      },
+      errorMessage: message ?? 'Valor máximo: $maxValue',
+    );
+  }
 }
