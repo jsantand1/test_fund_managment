@@ -74,20 +74,20 @@ class _SidebarMenuState extends State<SidebarMenu> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.account_balance_wallet,
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
           if (_isExpanded) ...[
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.account_balance_wallet,
+                color: Colors.white,
+                size: 24,
+              ),
+            ),
             const SizedBox(width: 12),
             Expanded(
               child: Column(
@@ -110,6 +110,8 @@ class _SidebarMenuState extends State<SidebarMenu> {
               ),
             ),
           ],
+          if (!_isExpanded)
+            const Spacer(), // Centra el botón cuando está colapsado
           IconButton(
             onPressed: () {
               setState(() {

@@ -37,7 +37,7 @@ class _FundsPageState extends State<FundsPage>
   String? _error;
   final AppUseCases _appUseCases = getIt<AppUseCases>();
   late FundsPagePresenter _presenter;
-  
+
   // Variables de estado local sincronizadas con BLoC
   double _availableAmount = 500000;
   Map<int, double> _subscriptions = {};
@@ -47,10 +47,10 @@ class _FundsPageState extends State<FundsPage>
     super.initState();
     _presenter = FundsPagePresenter(this, _appUseCases);
     _presenter.getFunds();
-    
+
     // Cargar estado inicial del BLoC
     context.read<FundsBloc>().add(const LoadFundsState());
-    
+
     // Sincronizar variables locales con el estado del BLoC
     _syncWithBlocState();
   }
@@ -311,19 +311,6 @@ class _FundsPageState extends State<FundsPage>
     );
   }
 
-  void _showCreateFundDialog() {
-    AppModal.showInfo(
-      context: context,
-      title: 'Crear Nuevo Fondo',
-      message: 'Funcionalidad de creación de fondos próximamente...',
-      icon: Icon(
-        Icons.add_circle_outline,
-        color: Theme.of(context).primaryColor,
-        size: 48,
-      ),
-    );
-  }
-
   void _showFundDetails(Fund fund) {
     AppModal.showInfo(
       context: context,
@@ -501,11 +488,7 @@ class _FundsPageState extends State<FundsPage>
 
   void _confirmUnsubscription(Fund fund, double investedAmount) {
     // Enviar evento al BLoC para actualizar el estado
-    context.read<FundsBloc>().add(
-      UnsubscribeFromFund(
-        fundId: fund.id,
-      ),
-    );
+    context.read<FundsBloc>().add(UnsubscribeFromFund(fundId: fund.id));
 
     // Agregar notificación de desuscripción
     context.read<NotificationsBloc>().add(
@@ -563,10 +546,7 @@ class _FundsPageState extends State<FundsPage>
 
     // Enviar evento al BLoC para actualizar el estado
     context.read<FundsBloc>().add(
-      SubscribeToFund(
-        fundId: fund.id,
-        amount: amount,
-      ),
+      SubscribeToFund(fundId: fund.id, amount: amount),
     );
 
     // Agregar notificación de suscripción
@@ -685,7 +665,10 @@ class _FundsPageState extends State<FundsPage>
 
               // Tarjeta de monto disponible
               BalanceCard(
-                availableAmount: UtilsApp.currencyFormat(_availableAmount, 'COP'),
+                availableAmount: UtilsApp.currencyFormat(
+                  _availableAmount,
+                  'COP',
+                ),
                 title: 'Monto Disponible',
                 subtitle: 'Para inversiones en fondos',
                 icon: Icons.account_balance_wallet,
