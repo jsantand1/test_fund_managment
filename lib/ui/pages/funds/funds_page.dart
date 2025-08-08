@@ -38,7 +38,6 @@ class _FundsPageState extends State<FundsPage>
   final AppUseCases _appUseCases = getIt<AppUseCases>();
   late FundsPagePresenter _presenter;
 
-  // Variables de estado local sincronizadas con BLoC
   double _availableAmount = 500000;
   Map<int, double> _subscriptions = {};
 
@@ -88,11 +87,9 @@ class _FundsPageState extends State<FundsPage>
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // Usar tarjetas en pantallas pequeñas (móviles)
         if (constraints.maxWidth < 768) {
           return _buildMobileView();
         } else {
-          // Usar tabla en pantallas grandes (tablets/desktop)
           return _buildTableView();
         }
       },
@@ -588,7 +585,6 @@ class _FundsPageState extends State<FundsPage>
         ),
         const SizedBox(height: 32),
 
-        // Título principal
         Text(
           '¡Comienza tu inversión!',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -598,7 +594,6 @@ class _FundsPageState extends State<FundsPage>
         ),
         const SizedBox(height: 12),
 
-        // Descripción
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Text(

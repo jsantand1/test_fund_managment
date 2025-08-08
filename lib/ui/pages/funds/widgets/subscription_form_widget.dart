@@ -103,7 +103,6 @@ class _SubscriptionFormWidgetState extends State<SubscriptionFormWidget> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Información del fondo
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -197,7 +196,6 @@ class _SubscriptionFormWidgetState extends State<SubscriptionFormWidget> {
           fields: _getSubscriptionFields(),
           enableReactiveValidation: true,
           onChanged: (values) {
-            // Validar formulario cuando cambien los valores
             _validateForm();
           },
         ),
@@ -220,13 +218,12 @@ class _SubscriptionFormWidgetState extends State<SubscriptionFormWidget> {
               child: ElevatedButton(
                 onPressed: _isFormValid
                     ? () {
-                        // Validar una vez más antes de enviar
                         if (_formKey.currentState?.validate() ?? false) {
                           final values = _formKey.currentState?.values ?? {};
                           _handleSubmit(values);
                         }
                       }
-                    : null, // Deshabilitado cuando el formulario no es válido
+                    : null,
                 child: const Text('Confirmar'),
               ),
             ),
