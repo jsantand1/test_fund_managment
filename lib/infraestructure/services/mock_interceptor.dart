@@ -19,8 +19,6 @@ class MockInterceptor extends Interceptor {
 
     if (method == 'GET') {
       responseData = _getMockGetData(endpoint, options.queryParameters);
-    } else if (method == 'POST') {
-      responseData = _getMockPostData(endpoint, options.data);
     } else {
       responseData = {
         'success': true,
@@ -109,70 +107,6 @@ class MockInterceptor extends Interceptor {
           'data': {
             'endpoint': endpoint,
             'queryParams': queryParams,
-            'timestamp': DateTime.now().toIso8601String(),
-          },
-        };
-    }
-  }
-
-  Map<String, dynamic> _getMockPostData(String endpoint, dynamic data) {
-    switch (endpoint) {
-      case '/users':
-      case '/user':
-        return {
-          'success': true,
-          'message': 'User created successfully',
-          'data': {
-            'id': DateTime.now().millisecondsSinceEpoch,
-            'name': data?['name'] ?? 'New User',
-            'email': data?['email'] ?? 'newuser@example.com',
-            'role': data?['role'] ?? 'user',
-            'created_at': DateTime.now().toIso8601String(),
-          },
-        };
-
-      case '/funds':
-      case '/fund':
-        return {
-          'success': true,
-          'message': 'Fund created successfully',
-          'data': {
-            'id': DateTime.now().millisecondsSinceEpoch,
-            'name': data?['name'] ?? 'New Fund',
-            'description': data?['description'] ?? 'New investment fund',
-            'current_value': data?['initial_value'] ?? 0.0,
-            'currency': data?['currency'] ?? 'USD',
-            'risk_level': data?['risk_level'] ?? 'Medium',
-            'created_at': DateTime.now().toIso8601String(),
-          },
-        };
-
-      case '/auth/login':
-        return {
-          'success': true,
-          'message': 'Login successful',
-          'data': {
-            'token': 'mock_jwt_token_${DateTime.now().millisecondsSinceEpoch}',
-            'user': {
-              'id': 1,
-              'name': 'Mock User',
-              'email': data?['email'] ?? 'user@example.com',
-              'role': 'user',
-            },
-            'expires_at': DateTime.now()
-                .add(const Duration(hours: 24))
-                .toIso8601String(),
-          },
-        };
-
-      default:
-        return {
-          'success': true,
-          'message': 'Mock POST response for: $endpoint',
-          'data': {
-            'endpoint': endpoint,
-            'receivedData': data,
-            'id': DateTime.now().millisecondsSinceEpoch,
             'timestamp': DateTime.now().toIso8601String(),
           },
         };
